@@ -12,6 +12,7 @@ class ApiClient {
   static const String apiKey = '0b2bdeda43b5688921839c8ecb20399b';
   static const String webUrl = 'https://movie.douban.com/';
 
+  var dio = ApiClient.createDio();
   Future<List<MovieNews>> getNewsList() async {
 
     List<MovieNews> news = [];
@@ -30,6 +31,36 @@ class ApiClient {
     });
 
     return news;
+  }
+
+
+
+  Future<dynamic> getNowPlayingList(int start, int count) async {
+      Response<Map> response = await dio.get('in_theaters',
+          queryParameters: {"start": start, "count": count});
+    return response.data['subjects'];
+  }
+
+  Future<dynamic> getComingList(int start, int count) async {
+    Response<Map> response = await dio.get('coming_soon',
+        queryParameters: {"start": start, "count": count});
+    return response.data['subjects'];
+  }
+
+  static Dio createDio() {
+    var options = BaseOptions(
+      baseUrl: baseUrl,
+      connectTimeout: 10000,
+      receiveTimeout: 100000,
+      contentType: ContentType.json,
+      queryParameters: {
+        "apikey": apiKey
+      }
+
+
+    );
+    return Dio(options);
+
   }
 
 }

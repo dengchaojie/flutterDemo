@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_douban/public.dart';
 import 'home_news_banner_view.dart';
+import 'movie_three_grid_view.dart';
+import 'package:flutter_douban/util/movie_data_util.dart';
+
 
 class HomeListView extends StatefulWidget {
 
@@ -30,11 +33,11 @@ class HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClien
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-//    if (nowPlayingList == null) {
-//      return Center (
-//        child: CupertinoActivityIndicator(),
-//      );
-//    }else {
+    if (nowPlayingList == null) {
+      return Center (
+        child: CupertinoActivityIndicator(),
+      );
+    }else {
       return Container(
         child: RefreshIndicator(
             color: AppColor.primary,
@@ -43,28 +46,28 @@ class HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClien
               cacheExtent: 1000,
               children: <Widget>[
                 NewsBannerView(newsList),
+                MovieThreeGridView(nowPlayingList, '影院热映', 'in_theaters'),
+                MovieThreeGridView(comingList, '即将上映', 'coming_soon'),
 
               ],
             ),
             onRefresh: fetchData
         ),
       );
-//    }
+    }
 
   }
 
   Future<void> fetchData() async {
     ApiClient client = ApiClient();
     List<MovieNews> movieList = await client.getNewsList();
-//    print(movieList);
-//    movieList.forEach((movie) {
-//      print(movie.title);
-//      print(movie.cover);
-//      print(movie.link);
-//      print(movie.summary);
-//    });
+    var moviesNow = await client.getNowPlayingList(0, 6);
+    var moviesComing = await client.getComingList(0, 6);
+
     setState(() {
         newsList = movieList;
+        nowPlayingList = MovieDataUtil.getMovieList(moviesNow);
+        comingList = MovieDataUtil.getMovieList(moviesComing);
     });
   }
 
