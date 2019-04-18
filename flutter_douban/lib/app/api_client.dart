@@ -47,6 +47,12 @@ class ApiClient {
     return response.data['subjects'];
   }
 
+  Future<dynamic> getSearchListByTag(String tag, int start, int count) async {
+    Response<Map> response = await dio.get('search',
+        queryParameters: {"tag": tag,"start": start, "count": count});
+    return response.data['subjects'];
+  }
+
   static Dio createDio() {
     var options = BaseOptions(
       baseUrl: baseUrl,

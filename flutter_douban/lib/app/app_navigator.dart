@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_douban/widget/web_view_scene.dart';
 import 'package:flutter_douban/movie/movie_list_view.dart';
 import 'package:flutter_douban/model/movie_item.dart';
-import 'package:flutter_douban/movie/movie_detail_view.dart';
+import 'package:flutter_douban/movie/movie_detail/movie_detail_view.dart';
 
 
 
