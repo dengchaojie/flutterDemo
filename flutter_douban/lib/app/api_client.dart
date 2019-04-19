@@ -53,6 +53,11 @@ class ApiClient {
     return response.data['subjects'];
   }
 
+  Future<dynamic> getMovieDetail(String movieId) async {
+    Response<Map> response = await dio.get('subject/$movieId');
+    return response.data;
+  }
+
   static Dio createDio() {
     var options = BaseOptions(
       baseUrl: baseUrl,
