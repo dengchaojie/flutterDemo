@@ -6,6 +6,11 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'movie_detail_header.dart';
 import 'package:flutter/cupertino.dart';
+import 'movie_detail_tag.dart';
+import 'movie_summary_view.dart';
+import 'movie_detail_cast_view.dart';
+import 'movie_detail_photos.dart';
+import 'movie_detail_comment.dart';
 
 class MovieDetailView extends StatefulWidget {
 
@@ -27,6 +32,7 @@ class MovieDetailViewState extends State<MovieDetailView> {
   double navAlpha = 0;
   Color pageColor;
   ScrollController _scrollController = ScrollController();
+  bool isSummaryUnfold = false;
 
   @override
   void initState() {
@@ -80,6 +86,7 @@ class MovieDetailViewState extends State<MovieDetailView> {
       body: Stack(
         children: <Widget>[
           Container(
+            color: pageColor,
             child: Column(
               children: <Widget>[
                 Expanded(child: ListView(
@@ -87,6 +94,16 @@ class MovieDetailViewState extends State<MovieDetailView> {
                   padding: EdgeInsets.only(top: 0),
                   children: <Widget>[
                     MovieDetailHeader(movieDetail, pageColor),
+                    MovieDetailTag(movieDetail.tags),
+                    MovieSummaryView(movieDetail.summary, isSummaryUnfold,
+                        changeSummaryUnfold),
+                    MovieDetailCastView(movieDetail.directors, movieDetail.casts),
+                    MovieDetailPhotos(movieDetail.trailers, movieDetail.photos,
+                        movieDetail.id),
+                    MovieDetailComment(movieDetail.comments),
+
+
+
                   ],
                 )
 
@@ -101,6 +118,15 @@ class MovieDetailViewState extends State<MovieDetailView> {
       ),
     );
   }
+
+
+  void changeSummaryUnfold() {
+
+    setState(() {
+      isSummaryUnfold = !isSummaryUnfold;
+    });
+  }
+
 
   Widget buildNavigationBar() {
     return Stack(

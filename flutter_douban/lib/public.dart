@@ -14,6 +14,8 @@ export 'package:flutter_douban/app/rate_view.dart';
 export 'package:flutter_douban/util/event_bus.dart';
 export 'package:flutter_douban/util/search_delegate.dart';
 export 'package:flutter_douban/util/screen.dart';
+export 'package:flutter_douban/util/toast.dart';
+
 
 // model
 export 'package:flutter_douban/model/movie_news.dart';
