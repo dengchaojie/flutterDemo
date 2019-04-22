@@ -8,6 +8,7 @@ import 'actor_detail_view.dart';
 
 
 
+
 class MovieDetailCastView extends StatelessWidget {
 
   final List<MovieActor> directors;
