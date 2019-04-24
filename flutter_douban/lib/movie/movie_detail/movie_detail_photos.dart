@@ -97,7 +97,7 @@ class TrailerItem extends StatelessWidget {
       margin: EdgeInsets.only(left: 15, bottom: 15),
       child: GestureDetector(
         onTap: () {
-          AppNavigator.push(context, MovieVideoPlay());
+          AppNavigator.push(context, MovieVideoPlay(trailer.trailerUrl));
         },
         child: Stack(
           children: <Widget>[

@@ -53,8 +53,25 @@ class ApiClient {
     return response.data['subjects'];
   }
 
+  Future<dynamic> getActorPhotos(String actorId, int start, int count) async {
+    Response<Map> response = await dio.get('celebrity/$actorId/photos',
+        queryParameters: {"start": start, "count": count});
+    return response.data['photos'];
+  }
+
+  Future<dynamic> getMovieAlbum(String movieId, int start, int count) async {
+      Response<Map> response = await dio.get('subject/$movieId/photos',
+        queryParameters: {"start": start, "count": count});
+    return response.data['photos'];
+  }
+
   Future<dynamic> getMovieDetail(String movieId) async {
     Response<Map> response = await dio.get('subject/$movieId');
+    return response.data;
+  }
+
+  Future<dynamic> getActorDetail(String actorId) async {
+    Response<Map> response = await dio.get('celebrity/$actorId');
     return response.data;
   }
 
