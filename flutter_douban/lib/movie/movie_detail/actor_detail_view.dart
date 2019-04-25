@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_douban/movie/actor_detail/actor_detail_header.dart';
 import 'package:flutter_douban/movie/actor_detail/actor_detail_summary.dart';
 import 'package:flutter_douban/movie/actor_detail/actor_detail_works.dart';
+import 'package:flutter_douban/movie/actor_detail/actor_detail_photo.dart';
 
 class ActorDetailView extends StatefulWidget {
 
@@ -94,6 +95,7 @@ class ActorDetailViewState extends State<ActorDetailView> {
                     ActorDetailSummary(actorDetail, isSummaryUnfold,
                         changeIsUnfold),
                     ActorDetailWorks(actorDetail.works),
+                    ActorDetailPhoto(actorDetail.photos, actorDetail.id),
 
 
                   ],
