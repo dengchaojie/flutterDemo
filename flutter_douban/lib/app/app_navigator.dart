@@ -4,7 +4,7 @@ import 'package:flutter_douban/widget/web_view_scene.dart';
 import 'package:flutter_douban/movie/movie_list_view.dart';
 import 'package:flutter_douban/model/movie_item.dart';
 import 'package:flutter_douban/movie/movie_detail/movie_detail_view.dart';
-
+import 'package:flutter_douban/movie/movie_top_list_view.dart';
 
 
 class AppNavigator {
@@ -21,6 +21,11 @@ class AppNavigator {
 
   static pushMovieList(BuildContext context, String title, String action) {
       AppNavigator.push(context, MovieListView(title, action));
+  }
+
+  static pushMovieTopList(BuildContext context, String title, String subTitle,
+      String action) {
+    AppNavigator.push(context, MovieTopListView(title, subTitle, action));
   }
 
   static pushWeb(BuildContext context, String url, String title) {

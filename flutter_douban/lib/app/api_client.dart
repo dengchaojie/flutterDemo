@@ -75,6 +75,39 @@ class ApiClient {
     return response.data;
   }
 
+  Future<dynamic> getWeeklyList() async {
+    Response<Map> response = await dio.get('weekly');
+    List content = response.data['subjects'];
+    List movies = [];
+    content.forEach((item){
+      movies.add(item['subject']);
+    });
+    return movies;
+  }
+
+  // 获取新片榜电影
+  Future<dynamic> getNewMoviesList() async {
+    Response<Map> response = await dio.get('new_movies');
+    return response.data['subjects'];
+  }
+
+  // 获取北美票房榜电影
+  Future<dynamic> getUsBoxList() async {
+    Response<Map> response = await dio.get('us_box');
+    List content = response.data['subjects'];
+    List movies = [];
+    content.forEach((item) {
+      movies.add(item['subject']);
+    });
+    return movies;
+  }
+
+  // 获取 top250 榜单
+  Future<dynamic> getTop250List({int start, int count}) async {
+    Response<Map> response = await dio.get('top250', queryParameters: {'start':start, 'count':count});
+    return response.data['subjects'];
+  }
+
   static Dio createDio() {
     var options = BaseOptions(
       baseUrl: baseUrl,

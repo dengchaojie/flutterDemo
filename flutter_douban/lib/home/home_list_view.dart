@@ -4,7 +4,7 @@ import 'package:flutter_douban/public.dart';
 import 'home_news_banner_view.dart';
 import 'movie_three_grid_view.dart';
 import 'package:flutter_douban/util/movie_data_util.dart';
-
+import 'movie_top_scroll_view.dart';
 
 class HomeListView extends StatefulWidget {
 
@@ -48,6 +48,7 @@ class HomeListViewState extends State<HomeListView> with AutomaticKeepAliveClien
                 NewsBannerView(newsList),
                 MovieThreeGridView(nowPlayingList, '影院热映', 'in_theaters'),
                 MovieThreeGridView(comingList, '即将上映', 'coming_soon'),
+                MovieTopScrollView('电影榜单'),
 
               ],
             ),
