@@ -4,13 +4,16 @@ import 'package:palette_generator/palette_generator.dart';
 import 'package:flutter_douban/public.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class MovieTopItemView extends StatelessWidget {
+
+
+class MovieTopItemView extends StatenlessWidget {
 
   final List<MovieItem> movies;
   final String title;
   final String subTitle;
   final PaletteColor coverColor;
   MovieTopItemView(this.movies, this.title, this.subTitle, this.coverColor);
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +46,7 @@ class MovieTopItemView extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.only(topLeft: Radius.circular(5),
-                      topRight: Radius.circular(5)),
+                          topRight: Radius.circular(5)),
                     ),
                   ),
                 ),
@@ -71,7 +74,7 @@ class MovieTopItemView extends StatelessWidget {
                   ),
 
                 ),
-            ],
+              ],
             ),
           ),
           Expanded(
@@ -80,7 +83,7 @@ class MovieTopItemView extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: coverColor == null ? Color(0xff3E454D) : this.coverColor.color,
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5))
+                        bottomRight: Radius.circular(5))
                 ),
                 child: ListView.builder(
                     itemCount: 10,
@@ -88,7 +91,7 @@ class MovieTopItemView extends StatelessWidget {
                       return itemBuilder(context, index);
                     }
                 ),
-          )),
+              )),
         ],
       ),
     );
@@ -108,8 +111,8 @@ class MovieTopItemView extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                color: Colors.white,
-                fontSize: 12
+                  color: Colors.white,
+                  fontSize: 12
               ),
             ),
           ),
@@ -122,7 +125,7 @@ class MovieTopItemView extends StatelessWidget {
               Text(
                 '${movies[index].rating.average}',
                 style: TextStyle(
-                  color: AppColor.white, fontSize: 12
+                    color: AppColor.white, fontSize: 12
                 ),
               ),
 

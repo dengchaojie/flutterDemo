@@ -28,7 +28,88 @@ class MovieTopListViewState extends State<MovieTopListView> {
   int count = 25;
   bool _loaded = false;
   bool isVisible = true;
+
   double navAlpha = 0;
+  ScrollController scrollController = ScrollController();
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+    scrollController.addListener((){
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        fetchData();
+      }
+      var offset = scrollController.offset;
+      if (offset < 0) {
+        setState(() {
+          navAlpha = 1.0;
+        });
+      }else if (offset < 50) {
+        setState(() {
+
+          navAlpha = 1 - (50 - offset) / 50;
+        });
+      }else if (navAlpha != 1) {
+        setState(() {
+          navAlpha = 1;
+        });
+
+      }
+
+
+    });
+
+  }
+
+  Future<void> fetchData() async {
+    if (_loaded) {
+      return;
+    }
+    ApiClient client = new ApiClient();
+    var data;
+    String action = this.widget.action;
+
+    switch (action) {
+      case 'weekly':
+        data = await client.getWeeklyList();
+        break;
+      case 'new_movies':
+        data = await client.getNewMoviesList();
+        break;
+      case 'us_box':
+        data = await client.getUsBoxList();
+        break;
+      case 'top250':
+        data = await client.getTop250List(start: start, count: count);
+        break;
+    }
+
+    setState(() {
+      if (movieList == null) {
+        movieList = [];
+      }
+      List<MovieItem> newMovies = MovieDataUtil.getMovieList(data);
+      newMovies.forEach((movie) {
+        movieList.add(movie);
+      });
+      if(this.widget.action == 'top250') {
+        if (newMovies.length == 0) {
+          _loaded = true;
+          return;
+        }
+      }else {
+        _loaded = true;
+        return;
+      }
+
+      start = start + count;
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,17 +129,71 @@ class MovieTopListViewState extends State<MovieTopListView> {
 
               )
             ],
-          )
+          ),
+          _buildNavigationBar(),
 
         ],
       ),
     );
   }
 
-//  Widget _buildNavgationBar() {
-//    return
-//
-//  }
+  Widget _buildNavigationBar() {
+    return Stack(
+
+      children: <Widget>[
+        Container(
+          width: 44,
+          height: Screen.navigationBarHeight,
+          padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
+          child: GestureDetector(
+            onTap: back,
+            child: Image.asset('images/icon_arrow_back_white.png'),
+          ),
+        ),
+        Opacity(
+          opacity: navAlpha,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white
+            ),
+            padding: EdgeInsets.fromLTRB(5, Screen.topSafeHeight, 0, 0),
+            height: Screen.navigationBarHeight,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 44,
+                  child: GestureDetector(
+                    onTap: back,
+                    child: Image.asset('images/icon_arrow_back_white.png'),
+                  ),
+                ),
+                Expanded(
+                    child: Text(
+                         this.widget.title,
+                      style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold
+                      ),
+                      textAlign: TextAlign.center,
+
+                )
+                ),
+                Container(
+                  width: 44,
+                )
+              ],
+            )
+          ),
+        ),
+
+      ],
+    );
+
+  }
+
+  void back() {
+    Navigator.pop(context);
+  }
 
   Widget _buildList() {
     int index = 1;
