@@ -6,7 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 
 
-class MovieTopItemView extends StatenlessWidget {
+class MovieTopItemView extends StatelessWidget {
 
   final List<MovieItem> movies;
   final String title;

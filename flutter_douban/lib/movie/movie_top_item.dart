@@ -48,7 +48,8 @@ class MovieTopItem extends StatelessWidget
                 fontSize: 12
               ),
             )
-          )
+          ),
+          item
         ],
       ),
     );

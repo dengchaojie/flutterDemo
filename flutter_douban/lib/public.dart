@@ -9,6 +9,7 @@ export 'package:flutter_douban/app/app_color.dart';
 export 'package:flutter_douban/app/api_client.dart';
 export 'package:flutter_douban/app/app_navigator.dart';
 export 'package:flutter_douban/app/rate_view.dart';
+export 'package:flutter_douban/app/app_scene.dart';
 
 // util
 export 'package:flutter_douban/util/event_bus.dart';

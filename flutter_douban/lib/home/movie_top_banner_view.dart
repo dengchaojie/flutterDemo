@@ -40,8 +40,7 @@ class MovieTopBannerView extends StatelessWidget {
                     width: Screen.width,
                     margin: EdgeInsets.symmetric(horizontal: 5),
                     child: MovieTopItemView(banner.movies, banner.title,
-                      banner.subTitle, banner.coverColor
-                    ),
+                      banner.subTitle, banner.coverColor),
                   ),
                 );
         }

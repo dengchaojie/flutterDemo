@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:ui' as ui;
+
+import 'package:flutter/services.dart';
+import 'dart:async';
+
 import 'package:flutter_douban/model/movie_item.dart';
 import 'package:flutter_douban/public.dart';
-import 'dart:ui' as ui;
 import 'movie_top_item.dart';
 import 'movie_list_item.dart';
-import 'package:flutter/cupertino.dart';
 
 class MovieTopListView extends StatefulWidget {
 
@@ -20,7 +24,7 @@ class MovieTopListView extends StatefulWidget {
   }
 }
 
-class MovieTopListViewState extends State<MovieTopListView> {
+class MovieTopListViewState extends State<MovieTopListView> with RouteAware {
   List<MovieItem> movieList;
   double coverWidth = Screen.width;
   double coverHeight = 218 + Screen.topSafeHeight;
@@ -112,8 +116,82 @@ class MovieTopListViewState extends State<MovieTopListView> {
   }
 
   @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context));
+  }
+
+  @override
+  void didPush() {
+    // TODO: implement didPush
+    super.didPush();
+    Timer(Duration(milliseconds: 500), () {
+      updateStatusBar();
+    });
+  }
+
+  @override
+  void didPushNext() {
+    // TODO: implement didPushNext
+    super.didPushNext();
+    isVisible = false;
+  }
+
+  @override
+  void didPop() {
+    // TODO: implement didPop
+    super.didPop();
+    isVisible = false;
+  }
+
+  @override
+  void didPopNext() {
+    // TODO: implement didPopNext
+    super.didPopNext();
+    isVisible = true;
+    updateStatusBar();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    routeObserver.unsubscribe(this);
+    scrollController.dispose();
+
+  }
+
+  void updateStatusBar() {
+    if(navAlpha == 1) {
+      Screen.updateStatusBarStyle(SystemUiOverlayStyle.dark);
+    }else {
+      Screen.updateStatusBarStyle(SystemUiOverlayStyle.light);
+    }
+
+  }
+
+  @override
   Widget build(BuildContext context) {
     // TODO: implement build
+    if(isVisible){
+      updateStatusBar();
+    }
+    if(this.movieList == null) {
+      return Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          leading: GestureDetector(
+            onTap: back,
+            child: Image.asset('images/icon_arrow_back_black.png'),
+          ),
+        ),
+        body: Center(
+          child: CupertinoActivityIndicator(),
+        ),
+      );
+    }
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -121,10 +199,13 @@ class MovieTopListViewState extends State<MovieTopListView> {
             children: <Widget>[
               Expanded(
                   child: ListView(
+
                       children: <Widget>[
                         _buildHeader(),
                         _buildList()
                       ],
+                    controller: scrollController,
+                    padding: EdgeInsets.only(top: 0),
                   )
 
               )

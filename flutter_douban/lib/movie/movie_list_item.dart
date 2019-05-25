@@ -33,7 +33,8 @@ class MovieListItem extends StatelessWidget {
         child: Text(update, style: TextStyle(color: Colors.red, fontSize: 12),),
       );
 
-    }else if (action == 'in_theaters' || action == 'search') {
+    }else
+//      if (action == 'in_theaters' || action == 'search') {
 
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -47,11 +48,11 @@ class MovieListItem extends StatelessWidget {
           Text('收藏', style: TextStyle(color: Color(0xFFF7AC3A)),),
         ],
       );
-    }else {
-      print('_getActionWidget未定义');
-      return Container();
-
-    }
+//    }else {
+//      print('_getActionWidget未定义');
+//      return Container();
+//
+//    }
 
   }
 
